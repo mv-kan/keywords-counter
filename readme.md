@@ -20,9 +20,22 @@ curl -X POST http://localhost:8080/count-keywords -H "Content-Type: application/
   "keyword": "hello"
 }'
 # check keyword count
-curl -X POST http://localhost:8080/keyword      -H "Content-Type: application/json"      -d '{"keyword": "hello"}'
+curl -X POST http://localhost:8080/keyword -H "Content-Type: application/json" -d '{"keyword": "hello"}'
 # check status of request 
 curl -X POST http://localhost:8080/request-status -H "Content-Type: application/json" -d '{
   "rid": "string"
 }'
 ```
+
+here you can find cool trick for stress test like this 
+```
+# in first terminal
+kubectl run -i --tty load-generator2 --rm --image=busybox:1.28 --restart=Never -- /bin/sh -c "while sleep 0.01; do wget -q -O- http://restapi/health; done"
+```
+
+```
+# in second terminal
+kubectl get hpa restapi-hpa --watch
+```
+
+https://kubernetes.io/docs/tasks/run-application/horizontal-pod-autoscale-walkthrough/

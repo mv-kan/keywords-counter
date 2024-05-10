@@ -1,0 +1,29 @@
+# restapi-deployment.yaml
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: restapi
+spec:
+  replicas: 1  # Start with 2 replicas
+  selector:
+    matchLabels:
+      app: restapi
+  template:
+    metadata:
+      labels:
+        app: restapi
+    spec:
+      containers:
+      - name: restapi
+        image: mvkan/keywords-counter-restapi:latest   
+        ports:
+        - containerPort: 8080
+        resources:
+          limits:
+            cpu: 500m
+          requests:
+            cpu: 200m
+        env:
+        - name: REDIS_HOST
+          value: redis  # The name of the Redis service
+        

@@ -1,0 +1,12 @@
+# restapi-service.yaml
+apiVersion: v1
+kind: Service
+metadata:
+  name: restapi
+spec:
+  type: LoadBalancer  # Or ClusterIP/NodePort, depending on your environment
+  ports:
+  - port: 80
+    targetPort: 80
+  selector:
+    app: restapi
